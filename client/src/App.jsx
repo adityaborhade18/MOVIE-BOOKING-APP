@@ -1,13 +1,32 @@
 import React from 'react'
-import { Route, BrowserRouter, Routes} from 'react-router-dom'
+import { Route, Routes, useLocation} from 'react-router-dom'
 import Movies from './pages/Movies'
+import Navbar from './components/Navbar'
+import MovieDetails from './pages/MovieDetails'
+import SeatLayout from './pages/SeatLayout'
+import MyBookings from './pages/MyBookings'
+import Favorite from './pages/Favorite'
 const App=()=>{
+    
+   const isAdminRoute = useLocation().pathname.startsWith('/admin');
+    
   return(
-    <BrowserRouter>
-      <Routes>
-         <Route path='/movie' element={<Movies/>}/>
-      </Routes>
-    </BrowserRouter>
+    <>  
+
+       {isAdminRoute ? null : <Navbar/>}
+        
+        
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/movies" element={<Movies/>}/> 
+          <Route path="/movies/:id" element={<MovieDetails/>}/> 
+          <Route path="/movies/:id/:date" element={<SeatLayout/>}/> 
+          <Route path="/my-bookings" element={<MyBookings/>}/> 
+          <Route path="/favorite" element={<Favorite/>}/> 
+        </Routes>
+    
+    </>
+     
 
     
   )

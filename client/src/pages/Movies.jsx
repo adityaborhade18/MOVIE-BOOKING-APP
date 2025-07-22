@@ -6,7 +6,6 @@ const Movies = () => {
       <h1>hello from movie</h1>
       {dummyTrailers.map((movie)=>(
           <img src={movie.image} alt="" />
-          
       ))}
     </div>
   )
