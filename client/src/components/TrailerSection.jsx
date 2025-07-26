@@ -15,8 +15,9 @@ const TrailerSection = () => {
         <BlurCircle top='-100px' right='-100px' />
         <ReactPlayer 
              url={currentTrailer.videoUrl}
-             playing={false} 
+             
              controls={true}
+             className='mx-auto max-w-full'
              width="100%"
              height="540px"
            />
@@ -39,3 +40,4 @@ const TrailerSection = () => {
 };
 
 export default TrailerSection;
+
