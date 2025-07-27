@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { dummyShowsData, dummyDateTimeData } from '../assets/assets';
 import { useParams } from 'react-router-dom';
 import BlurCircle from '../components/BlurCircle';
-import {StarIcon} from 'lucide-react'
+import {Heart, PlayCircleIcon, StarIcon} from 'lucide-react'
 import timeFormat from '../lib/timeFormat';
+import DateSelect from '../components/DateSelect';
 
 const MovieDetails = () => {
   const {id} = useParams();
   const [show,setShow]=useState(null);
+  
 
   const getshow=()=>{
     const show=dummyShowsData.find(show=>show._id===(id));
@@ -20,6 +22,8 @@ const MovieDetails = () => {
   useEffect(()=>{
     getshow();
   },[id]);
+
+ 
 
   
   return show ?(
@@ -42,8 +46,36 @@ const MovieDetails = () => {
               .{show.movie.release_date.split("-")[0]}
              </p>
 
+             <div className='flex items-center  flex-wrap gap-4 mt-4 '>
+              <button className='flex items-center gap-2 px-7 py-2 text-sm  bg-gray-800 hover:bg-gray-900 
+                transition font-medium rounded-md cursor-pointer active:scale-95
+              '>
+              <PlayCircleIcon className='w-5 h-5'/>
+                Watch Trailers</button>
+              <a href="#dateSelect" className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull 
+              transition font-medium rounded-md cursor-pointer active:scale-95'>Buy Tickets</a>
+              <button  className='bg-gray-700 p-2.5 rounded-full cursor-pointer active:scale-95  '>
+                <Heart className={`w-5 h-5 `}/>
+              </button>
+             </div>
+
          </div>
       </div>
+
+      <p className='mt-20 font-medium  text-lg'>Your Favorite Cast</p>
+      <div className='overflow-x-auto no-scrollbar mt-8  pb-4 whitespace-nowrap'>
+         <div className='flex items-center gap-4 w-max px-4'>
+            {show.movie.casts.slice(0,12).map((cast,index)=>(
+              <div key={index} className='flex flex-col items-center text-center '>
+                <img src={cast.profile_path} alt="" className='rounded-full  h-20 md:h-20 aspect-square object-cover ' />
+                <p className='font-medium text-xs mt-3'>{cast.name}</p>
+              </div>
+            ))}
+         </div>
+      </div>
+
+      <DateSelect dateTime={show.dateTime} id={id}/>
+
     </div>
   ): <div>Loading</div>
 }
