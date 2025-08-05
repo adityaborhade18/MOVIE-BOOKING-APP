@@ -25,7 +25,7 @@ app.use(clerkMiddleware())
 
 
 app.get('/',(req,res)=>{
-   res.send("hello from movies")
+   res.send("Server is live !")
 })
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
