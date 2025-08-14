@@ -3,7 +3,7 @@ import {clerkClient} from "@clerk/express";
 import Movie from "../models/Movie.js";
 
 
-//api to get the user bookings
+/
 export const getUserBookings = async (req,res) => {
     try{
         
