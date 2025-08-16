@@ -1,6 +1,6 @@
-import Booking from "../models/Booking";
-import Show from "../models/Show";
-import User from "../models/User";
+import Booking from "../models/Booking.js";
+import Show from "../models/Show.js";
+import User from "../models/User.js";
 
 
 
