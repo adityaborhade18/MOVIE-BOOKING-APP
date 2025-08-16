@@ -28,5 +28,5 @@ const boookingSchema=new mongoose.Schema({
     }
 },{timestamps:true})
 
-const Booking=mongoose.moedel("Booking", boookingSchema);
+const Booking=mongoose.model("Booking", boookingSchema);
 export default Booking;
