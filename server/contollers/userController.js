@@ -23,6 +23,7 @@ export const updateFavorite=async(req,res)=>{
     try{
        const {movieId}= req.body;
        const userId=req.auth().userId;
+       console.log(userId);
 
        const user=await clerkClient.users.getUser(userId);
 

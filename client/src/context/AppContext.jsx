@@ -21,23 +21,69 @@ export const AppContextProvider = ({ children }) => {
     const location=useLocation();
     const navigate=useNavigate();
 
-    const fetchIsAdmin=async()=>{
-        try{
-            const {data}=await axios.get('/api/user/is-admin',{
-                headers:{
-                     Authorization:`Bearer ${await getToken()}`,
-                },
-            })
-            setIsAdmin(data.isAdmin);
+    // const fetchIsAdmin=async()=>{
+    //     try{
+    //         const {data}=await axios.get('/api/admin/is-admin',{
+    //             headers:{
+    //                  Authorization:`Bearer ${await getToken()}`,
+    //             },
+    //         })
+    //         setIsAdmin(data.isAdmin);
 
-            if(!data.isAdmin && location.pathname.startsWith('/admin')){
-                navigate('/');
-                toast.error("you are not authorized to access the admin dashboard");
+    //         if(!data.isAdmin && location.pathname.startsWith('/admin')){
+    //             navigate('/');
+    //             toast.error("you are not authorized to access the admin dashboard");
+    //         }
+    //     }catch(error){
+    //         console.error(error);
+    //     }
+    // }
+
+    const fetchIsAdmin = async () => {
+    try {
+        // 1️⃣ Get token
+        const token = await getToken();
+        if (!token) {
+            console.warn("No token found. User might not be logged in.");
+            setIsAdmin(false);
+            if (location.pathname.startsWith("/admin")) {
+                navigate("/");
+                toast.error("You are not authorized to access the admin dashboard");
             }
-        }catch(error){
-            console.error(error);
+            return;
+        }
+
+        // 2️⃣ Correct backend URL (adjust port if needed)
+        const backendURL = "http://localhost:3000"; // <-- replace 5000 with your backend port
+        const { data } = await axios.get(`${backendURL}/api/admin/is-admin`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // 3️⃣ Set admin state
+        setIsAdmin(data?.isAdmin || false);
+
+        // 4️⃣ Redirect non-admin users from admin pages
+        if (!data?.isAdmin && location.pathname.startsWith("/admin")) {
+            navigate("/");
+            toast.error("You are not authorized to access the admin dashboard");
+        }
+
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error("Axios error:", error.response?.data || error.message);
+            console.error("Status code:", error.response?.status);
+        } else {
+            console.error("Unexpected error:", error);
+        }
+        setIsAdmin(false);
+        if (location.pathname.startsWith("/admin")) {
+            navigate("/");
+            toast.error("You are not authorized to access the admin dashboard");
         }
     }
+    };
+
+
 
     const fetchShows=async()=>{
         try{

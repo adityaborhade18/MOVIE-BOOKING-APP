@@ -85,7 +85,7 @@ export const addShow=async()=>{
 }
 
 // api to get all shows from database
-export const getShows=async()=>{
+export const getShows=async(req,res)=>{
     try{
        const shows=await Show.find({showDateTime:{$gte:new Date()}}).populate('movie').sort({showDateTime:1});
 

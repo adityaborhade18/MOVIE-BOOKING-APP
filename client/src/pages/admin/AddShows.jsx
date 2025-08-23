@@ -94,8 +94,8 @@ const AddShows = () => {
           toast.error(data.message);
         }
     }catch(error){
-         console.log("submission error",error);
-         toast.error("An Error Occurred, please try  again");
+         console.log("AddShows admin page  error",error);
+         toast.error("An Error Occurred During add Shows, please try  again");
     }
     setAddingShow(false);
    }
