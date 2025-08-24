@@ -21,68 +21,29 @@ export const AppContextProvider = ({ children }) => {
     const location=useLocation();
     const navigate=useNavigate();
 
-    const fetchIsAdmin=async()=>{
-        try{
-            const {data}=await axios.get('/api/admin/is-admin',{
-                headers:{
-                     Authorization:`Bearer ${await getToken()}`,
-                },
-            })
-            setIsAdmin(data.isAdmin);
+  const fetchIsAdmin = async () => {
+  try {
+    const token = await getToken();
+    if (!token) return; 
 
-            if(!data.isAdmin && location.pathname.startsWith('/admin')){
-                navigate('/');
-                toast.error("you are not authorized to access the admin dashboard");
-            }
-        }catch(error){
-            console.error(error);
-        }
+    const { data } = await axios.get('/api/admin/is-admin', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setIsAdmin(data.isAdmin);
+
+    if (!data.isAdmin && location.pathname.startsWith('/admin')) {
+      navigate('/');
+      toast.error("You are not authorized to access the admin dashboard");
     }
+  } catch (error) {
+    console.error("error is from fetchadmin ", error);
+  }
+};
 
-    // const fetchIsAdmin = async () => {
-    //     try {
-    //         // 1️⃣ Get token
-    //         const token = await getToken();
-    //         if (!token) {
-    //             console.warn("No token found. User might not be logged in.");
-    //             setIsAdmin(false);
-    //             if (location.pathname.startsWith("/admin")) {
-    //                 navigate("/");
-    //                 toast.error("You are not authorized to access the admin dashboard");
-    //             }
-    //             return;
-    //         }
 
-    //         // 2️⃣ Call backend API
-    //         const backendURL = "http://localhost:3000"; // adjust your backend port
-    //         const { data } = await axios.get(`${backendURL}/api/admin/is-admin`, {
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         });
-
-    //         // 3️⃣ Set admin state
-    //         setIsAdmin(data?.isAdmin || false);
-
-    //         // 4️⃣ Redirect non-admin users if on admin page
-    //         if (!data?.isAdmin && location.pathname.startsWith("/admin")) {
-    //             navigate("/");
-    //             toast.error("You are not authorized to access the admin dashboard");
-    //         }
-    //     } catch (error) {
-    //         // Handle Axios errors or unexpected errors
-    //         if (axios.isAxiosError(error)) {
-    //             console.error("Axios error:", error.response?.data || error.message);
-    //             console.error("Status code:", error.response?.status);
-    //         } else {
-    //             console.error("Unexpected error:", error);
-    //         }
-
-    //         setIsAdmin(false);
-    //         if (location.pathname.startsWith("/admin")) {
-    //             navigate("/");
-    //             toast.error("You are not authorized to access the admin dashboard");
-    //         }
-    //     }
-    // };
+    
+   
 
 
     const fetchShows=async()=>{

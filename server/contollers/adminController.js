@@ -6,6 +6,11 @@ import User from "../models/User.js";
 
 // api to check if user is admin
 export const isAdmin=async(req,res)=>{
+    const { userId } = req.auth();
+    if (!userId) return res.status(401).json({ success: false, message: "Unauthorized: No userId" });
+
+  // check if admin (your logic)
+
     res.json({success:true, isAdmin:true});
 }
 
