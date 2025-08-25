@@ -5,14 +5,25 @@ import User from "../models/User.js";
 
 
 // api to check if user is admin
-export const isAdmin=async(req,res)=>{
-    const { userId } = req.auth();
+// server/controllers/adminController.js
+import { getAuth, clerkClient } from "@clerk/express";
+
+export const isAdmin = async (req, res) => {
+  try {
+    const { userId } = getAuth(req);
     if (!userId) return res.status(401).json({ success: false, message: "Unauthorized: No userId" });
 
-  // check if admin (your logic)
+    const user = await clerkClient.users.getUser(userId);
+    const isAdmin = user.privateMetadata.role === "admin";
 
-    res.json({success:true, isAdmin:true});
-}
+    res.json({ success: true, isAdmin });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
 
 // api to  get dashboard data 
 export const getDashboardData=async(req,res)=>{

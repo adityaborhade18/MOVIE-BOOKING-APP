@@ -12,6 +12,7 @@ import userRouter from './routes/userRoutes.js';
 
 
 
+
 const app=express();
 const port =process.env.PORT || 3000;
 
@@ -26,7 +27,8 @@ await connectDB()
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:5173',
   credentials: true}));
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
+
 
 
 
