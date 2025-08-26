@@ -19,7 +19,7 @@ export const getNowPlayingMovies=async(req,res)=>{
     }
 }
 
-export const addShow=async()=>{
+export const addShow=async(req,res)=>{
     try{
         const {movieId, showsInput , showPrice}= req.body;
          
@@ -100,7 +100,7 @@ export const getShows=async(req,res)=>{
 //api to get one show from database
 export const getShow=async(req,res)=>{
     try{
-        const movieId=req.params;
+        const {movieId}=req.params;
         const shows=await Show.find({movie:movieId , showDateTime:{$gte:new Date()}})
 
         const movie=await Movie.findById(movieId);

@@ -22,43 +22,18 @@
 //     const location=useLocation();
 //     const navigate=useNavigate();
 
-//   const fetchIsAdmin = async () => {
-//   try {
-//     const token = await getToken();
-//     if (!token) return; 
 
-//     console.log("token is", token);
-
-//     const { data } = await axios.get('/api/admin/is-admin', {
-//       withCredentials: true,
-//       headers: { Authorization: `Bearer ${token}` },
-//     });
-
-//     console.log('data from the backend', data);
-
-//     setIsAdmin(data.isAdmin);
-
-//     if (!data.isAdmin && location.pathname.startsWith('/admin')) {
-//       navigate('/');
-//       toast.error("You are not authorized to access the admin dashboard");
-//     }
-//   } catch (error) {
-//     console.error("error from frontend", error);
-//     toast.error(error.response?.data?.message || error.message);
-//     setIsAdmin(false);
-//   }
-// };
 
 
 
 // // const fetchIsAdmin = async () => {
 // //   try {
-// //     // 👇 fetch token from Clerk
+   
 // //     const token = await getToken({ template: "session" });
 
 // //     const res = await axios.get("/api/admin/is-admin", {
 // //       headers: {
-// //         Authorization: `Bearer ${token}`,  // 👈 MUST send this
+// //         Authorization: `Bearer ${token}`, 
 // //       },
 // //       withCredentials: true,
 // //     });
@@ -69,17 +44,24 @@
 // //   }
 // // };
 
+//    const fetchIsAdmin = async () => {
+//     try {
+//       const { data } = await api.get("/api/admin/is-admin");
+//       console.log("Admin check:", data);
+//       setIsAdmin(data.isAdmin);
 
+//       if (!data.isAdmin && location.pathname.startsWith("/admin")) {
+//         navigate("/");
+//         toast.error("You are not authorized to access the admin dashboard");
+//       }
+//     } catch (err) {
+//       console.error("Axios error:", err);
+//       toast.error(err.response?.data?.message || err.message);
+//       setIsAdmin(false);
+//     }
+//   };
 
-
-
-
-
-    
-   
-
-
-//     const fetchShows=async()=>{
+//   const fetchShows=async()=>{
 //         try{
 //             const {data}=await axios.get('/api/show/all');
 //             if(data.success){
@@ -149,20 +131,20 @@ export const AppContextProvider = ({ children }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
+  axios.defaults.baseURL=import.meta.env.VITE_BASE_URL;
 
   const { user } = useUser();
   const { getToken } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Create Axios instance
-  const api = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL,
-    withCredentials: true,
-  });
+  
+  // const api = axios.create({
+  //   baseURL: import.meta.env.VITE_BASE_URL,
+  //   withCredentials: true,
+  // });
 
-  // Axios interceptor to attach Clerk token automatically
-  api.interceptors.request.use(async (config) => {
+  axios.interceptors.request.use(async (config) => {
     const token = await getToken({ template: "session" });
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
@@ -170,7 +152,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchIsAdmin = async () => {
     try {
-      const { data } = await api.get("/api/admin/is-admin");
+      const { data } = await axios.get("/api/admin/is-admin");
       console.log("Admin check:", data);
       setIsAdmin(data.isAdmin);
 
@@ -180,14 +162,14 @@ export const AppContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.error("Axios error:", err);
-      toast.error(err.response?.data?.message || err.message);
+     
       setIsAdmin(false);
     }
   };
 
   const fetchShows = async () => {
     try {
-      const { data } = await api.get("/api/show/all");
+      const { data } = await axios.get("/api/show/all");
       if (data.success) setShows(data.shows);
       else toast.error(data.message);
     } catch (err) {
@@ -197,7 +179,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchFavoritesMovies = async () => {
     try {
-      const { data } = await api.get("/api/user/favorites");
+      const { data } = await axios.get("/api/user/favorites");
       if (data.success) setFavoriteMovies(data.movies);
       else toast.error(data.message);
     } catch (err) {
@@ -217,7 +199,7 @@ export const AppContextProvider = ({ children }) => {
   }, [user]);
 
   const value = {
-    api,
+    axios,
     fetchIsAdmin,
     user,
     getToken,

@@ -27,7 +27,7 @@ export const protectAdmin = async (req, res, next) => {
   try {
     // Extract user info from Clerk token
     const { userId, sessionId, getToken } = getAuth(req);
-    console.log("your userId is", userId);
+    
 
     if (!userId) {
       return res

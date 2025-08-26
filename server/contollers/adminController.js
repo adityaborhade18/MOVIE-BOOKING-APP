@@ -1,13 +1,10 @@
 import Booking from "../models/Booking.js";
 import Show from "../models/Show.js";
 import User from "../models/User.js";
-
+import { getAuth, clerkClient } from "@clerk/express";
 
 
 // api to check if user is admin
-// server/controllers/adminController.js
-import { getAuth, clerkClient } from "@clerk/express";
-
 export const isAdmin = async (req, res) => {
   try {
     const { userId } = getAuth(req);

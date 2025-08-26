@@ -68,7 +68,7 @@ const AddShows = () => {
     try{
         setAddingShow(true);
 
-        if(!selectedMovie || Object,keys(dateTimeSelection).length === 0 || !showPrice){
+        if(!selectedMovie || Object.keys(dateTimeSelection).length === 0 || !showPrice){
           return toast("missing required field");
         }
         const showsInput=Object.entries(dateTimeSelection).map(([date,time])=>(
@@ -84,6 +84,13 @@ const AddShows = () => {
           headers:{
             Authorization: `Bearer ${await getToken()}`
           }
+          
+
+        //   headers:{
+        //    Authorization: `Bearer ${import.meta.env.V4_TMDB_URL}`
+        //  }
+
+
         })
         if(data.success){
           toast.success(data.message);
