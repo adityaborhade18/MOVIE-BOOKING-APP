@@ -166,7 +166,7 @@ const SeatLayout = () => {
   const [occupiedSeats, setOccupiedSeats] = useState([]);
 
   const navigate = useNavigate();
-  const { axios } = useAppContext();
+  const { axios, user, getToken } = useAppContext();
 
   const getShow = async () => {
     try {
@@ -233,9 +233,10 @@ const SeatLayout = () => {
 
   const bookTickets=async()=>{
     try{
+      
       if(!user) return toast.error("please Login to proceed");
       if(!selectedTime || !selectedSeats.length) return toast.error("please select a time and seat");
-
+       
       const {data} =await axios.post('/api/booking/create', {showId:selectedTime.showId, selectedSeats},{
         headers:{
           Authorization:
@@ -243,6 +244,7 @@ const SeatLayout = () => {
   
         }
       })
+    
       if(data.success){
            toast.success(data.message);
            navigate('/my-bookings');
@@ -251,6 +253,7 @@ const SeatLayout = () => {
       }
 
     }catch(error){
+      console.log("seatlayout error ", error);
       toast.error(error.message);
     }
   }

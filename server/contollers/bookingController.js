@@ -84,9 +84,11 @@ const checkSeatsAvailability = async (showId, selectedSeats) => {
 
 export const createBooking = async (req, res) => {
   try {
-    const userId = req.user?.id || req.auth?.userId; 
+    const userId = req.user?.id || req.auth()?.userId; 
+    console.log("userid from backend ",userId);
+    console.log("req body", req.body);
     const { showId, selectedSeats } = req.body;
-
+    console.log("req body", req.body);
     if (!userId) {
       return res.json({ success: false, message: "Unauthorized user" });
     }
@@ -121,6 +123,7 @@ export const createBooking = async (req, res) => {
       booking,
     });
   } catch (error) {
+    console.log("createBooking error", error);
     console.log(error.message);
     res.json({ success: false, message: error.message });
   }
