@@ -4,6 +4,7 @@ import { assets } from '../assets/assets';
 import { MenuIcon, SearchIcon, TicketPlus, XIcon } from 'lucide-react';
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import { useAppContext } from '../context/AppContext';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 const Navbar = () => {
    
@@ -58,9 +59,10 @@ const Navbar = () => {
                 <form onSubmit={submitHandler}>
                     <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
                     <input onChange={(e)=> setSearchQuery(e.target.value)} className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search Movies..." />
-                    {/* <img src={assets.search_icon} alt="search" className='w-4 h-4' /> */}
-                    {/* <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer'/> */}
-                    <button type='submit'>search</button>
+                    
+                    <button type="submit">
+                       <MagnifyingGlassIcon className="w-5 h-5 text-gray-500" />
+                    </button>
                 </div>
                </form>
                 
