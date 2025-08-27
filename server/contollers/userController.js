@@ -60,3 +60,19 @@ export const getFavorites=async(req,res)=>{
         res.json({success:false, message:error.message});
     }
 }
+
+
+export const getSearch = async (req, res) => {
+  try {
+    const query = req.query.query || "";
+
+    const movies = await Movie.find({
+      title: { $regex: query, $options: "i" }, 
+    });
+
+    res.json({ success: true, movies });
+  } catch (error) {
+    console.log("search function error", error);
+    res.json({ success: false, error: error.message });
+  }
+};

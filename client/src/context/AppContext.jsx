@@ -129,6 +129,7 @@ export const AppContextProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [shows, setShows] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [searchQuery, setSearchQuery]=useState("")
 
   const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
   axios.defaults.baseURL=import.meta.env.VITE_BASE_URL;
@@ -208,9 +209,12 @@ export const AppContextProvider = ({ children }) => {
     navigate,
     isAdmin,
     shows,
+    setShows,
     favoriteMovies,
     fetchFavoritesMovies,
     image_base_url,
+    searchQuery,
+    setSearchQuery,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

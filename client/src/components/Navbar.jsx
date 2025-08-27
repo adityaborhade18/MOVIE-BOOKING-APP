@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { MenuIcon, SearchIcon, TicketPlus, XIcon } from 'lucide-react';
@@ -12,7 +12,22 @@ const Navbar = () => {
   const {openSignIn}= useClerk()
   const navigate=useNavigate()
 
-  const {favoriteMovies}=useAppContext();
+  const {favoriteMovies,searchQuery,setSearchQuery,axios,shows,setShows}=useAppContext();
+
+  const submitHandler = async (e) => {
+  e.preventDefault();
+  try {
+    const { data } = await axios.get(`/api/user/search?query=${encodeURIComponent(searchQuery)}`);
+    console.log(data);
+    if (data.success) {
+      setShows(data.movies);  
+      navigate('/movies');
+    }
+  } catch (error) {
+    console.log("Error while searching movies from frontend:", error);
+  }
+};
+
 
   return (
     <div className='fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5'>
@@ -38,8 +53,17 @@ const Navbar = () => {
       </div>
 
       {/* for login and search button*/}
-        <div className='flex items-center gap-8'>
-           <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer'/>
+        <div className='flex items-center gap-8'> 
+
+                <form onSubmit={submitHandler}>
+                    <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
+                    <input onChange={(e)=> setSearchQuery(e.target.value)} className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search Movies..." />
+                    {/* <img src={assets.search_icon} alt="search" className='w-4 h-4' /> */}
+                    {/* <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer'/> */}
+                    <button type='submit'>search</button>
+                </div>
+               </form>
+                
 
            {!user? (
             <button onClick={openSignIn} className='px-4 py-1 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull 
