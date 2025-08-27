@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from 'react'
-// import { dummyShowsData, dummyDateTimeData } from '../assets/assets';
+
 // import { useNavigate, useParams } from 'react-router-dom';
 // import BlurCircle from '../components/BlurCircle';
 // import {Heart, PlayCircleIcon, StarIcon} from 'lucide-react'
@@ -95,7 +95,7 @@
 //          <div className='flex items-center gap-4 w-max px-4'>
 //             {show.movie.casts.slice(0,12).map((cast,index)=>(
 //               <div key={index} className='flex flex-col items-center text-center '>
-//                 <img src={image_base_url + cast.profile_path} alt="" className='rounded-full  h-20 md:h-20 aspect-square object-cover ' />
+//                 <img src={cast.image_base_url + cast.profile_path} alt="" className='rounded-full  h-20 md:h-20 aspect-square object-cover ' />
 //                 <p className='font-medium text-xs mt-3'>{cast.name}</p>
 //               </div>
 //             ))}
@@ -143,7 +143,7 @@ const MovieDetails = () => {
   const [show, setShow] = useState(null);
   const [loadingFav, setLoadingFav] = useState(false);
 
-  const { shows, getToken, axios, user, favoriteMovies, fetchFavoriteMovies, image_base_url } = useAppContext();
+  const { shows, getToken, axios, user, favoriteMovies, fetchFavoritesMovies, image_base_url } = useAppContext();
 
   // Fetch movie details
   const getShow = async () => {
@@ -161,15 +161,16 @@ const MovieDetails = () => {
     try {
       if (!user) return toast.error("Please login to proceed");
       setLoadingFav(true);
-
+    
       const { data } = await axios.post(
         '/api/user/update-favorite',
         { movieId: id },
         { headers: { Authorization: `Bearer ${await getToken()}` } }
       );
-
+   
       if (data.success) {
-        await fetchFavoriteMovies();
+        
+        await fetchFavoritesMovies();
         toast.success(data.message);
       }
     } catch (error) {
@@ -245,7 +246,7 @@ const MovieDetails = () => {
       <p className="mt-20 font-medium text-lg">Your Favorite Cast</p>
       <div className="overflow-x-auto no-scrollbar mt-8 pb-4 whitespace-nowrap">
         <div className="flex items-center gap-4 w-max px-4">
-          {movie.casts?.slice(0, 12).map((cast, index) => (
+          {show.movie.casts?.slice(0, 12).map((cast, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <img
                 src={cast.profile_path ? image_base_url + cast.profile_path : "/avatar.png"}

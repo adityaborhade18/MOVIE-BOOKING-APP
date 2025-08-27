@@ -28,14 +28,17 @@ export const updateFavorite=async(req,res)=>{
        const user=await clerkClient.users.getUser(userId);
 
        if(!user.privateMetadata.favorites){
-         user.privateMetadata.favroite=[];
+         user.privateMetadata.favorites=[];
        }
+
+       
+
        if(!user.privateMetadata.favorites.includes(movieId)){
         user.privateMetadata.favorites.push(movieId);
        }else{
            user.privateMetadata.favorites=user.privateMetadata.favorites.filter(item=>item !== movieId);
        }
-
+      
        await clerkClient.users.updateUserMetadata(userId, {privateMetadata:user.privateMetadata});
 
        res.json({success:true, message:"Favorites movies updated "});

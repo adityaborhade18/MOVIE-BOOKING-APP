@@ -180,6 +180,8 @@ export const AppContextProvider = ({ children }) => {
   const fetchFavoritesMovies = async () => {
     try {
       const { data } = await axios.get("/api/user/favorites");
+      console.log(data.movies);
+      
       if (data.success) setFavoriteMovies(data.movies);
       else toast.error(data.message);
     } catch (err) {
