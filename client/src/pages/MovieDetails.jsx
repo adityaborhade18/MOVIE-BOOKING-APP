@@ -144,7 +144,7 @@ const MovieDetails = () => {
   const [loadingFav, setLoadingFav] = useState(false);
 
   const { shows, getToken, axios, user, favoriteMovies, fetchFavoritesMovies, image_base_url } = useAppContext();
-
+  console.log("moviedetails",shows);
   // Fetch movie details
   const getShow = async () => {
     try {
@@ -189,7 +189,7 @@ const MovieDetails = () => {
 
   const movie = show.movie;
   const isFavorite = favoriteMovies.some(movie => movie._id === id);
-
+   
   return (
     <div className="px-6 md:px-16 lg:px-40 mt-30 md:pt-50">
       <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
@@ -242,14 +242,14 @@ const MovieDetails = () => {
         </div>
       </div>
 
-      {/* Cast */}
+      {/* Cast
       <p className="mt-20 font-medium text-lg">Your Favorite Cast</p>
       <div className="overflow-x-auto no-scrollbar mt-8 pb-4 whitespace-nowrap">
         <div className="flex items-center gap-4 w-max px-4">
-          {show.movie.casts?.slice(0, 12).map((cast, index) => (
+          {movie.casts?.slice(0, 12).map((cast, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <img
-                src={cast.profile_path ? image_base_url + cast.profile_path : "/avatar.png"}
+                src={image_base_url + cast.profile_path }
                 alt={cast.name}
                 className="rounded-full h-20 md:h-20 aspect-square object-cover"
               />
@@ -257,7 +257,7 @@ const MovieDetails = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Date Select */}
       <DateSelect dateTime={show.dateTime} id={id} />
@@ -286,4 +286,6 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
+
+
 

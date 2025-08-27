@@ -2,6 +2,9 @@ import axios from 'axios';
 import Movie from '../models/Movie.js';
 import Show from '../models/Show.js';
 
+
+
+
 export const getNowPlayingMovies=async(req,res)=>{
     try{
       
@@ -119,3 +122,19 @@ export const getShow=async(req,res)=>{
         res.json({success:false, message:error.message});
     }
 }
+
+// export const getCasts = async (req, res) => {
+//   try {
+//     const { movieId } = req.params;
+//     const apiKey = process.env.TMDB_APIKEY;
+    
+//     const response = await axios.get(
+//       `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`
+//     );
+
+//     res.json({ success: true, cast: response.data.cast });
+//   } catch (error) {
+//     console.error("TMDB fetch error:", error.response?.data || error.message);
+//     res.status(500).json({ success: false, message: 'Failed to fetch credits' });
+//   }
+// };
