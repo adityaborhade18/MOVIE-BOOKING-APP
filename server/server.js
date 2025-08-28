@@ -25,11 +25,13 @@ await connectDB()
     console.log('error connecting to database',err);
 })
 
+const allowedOrigin=['http://localhost:5173','https://movie-booking-app-drab.vercel.app/']
+
 // stripe webhook route
 app.use('/api/stripe', express.raw({type:'application/json'}), stripeWebhooks);
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173',
+app.use(cors({ origin: allowedOrigin,
   credentials: true}));
 app.use(clerkMiddleware());
 
