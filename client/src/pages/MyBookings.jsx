@@ -6,6 +6,7 @@ import timeFormat from '../lib/timeFormat';
 
 import dateFormat from '../lib/dateFormat';
 import { useAppContext } from '../context/AppContext';
+import { Link } from 'react-router-dom';
 
 const MyBookings = () => {
 
@@ -71,7 +72,7 @@ const MyBookings = () => {
                       <p className='text-2xl font-semibold mb-3'>
                      {currency}{item.amount}
                   </p>
-                  {!item.isPaid && <button className='bg-primary rounded-full text-sm cursor-pointer px-4 py-1.5 mb-3 font-medium'>Pay Now </button>}
+                  {!item.isPaid && <Link to={item.paymentLink} className='bg-primary rounded-full text-sm cursor-pointer px-4 py-1.5 mb-3 font-medium'>Pay Now </Link>}
                   </div>
                   
                   <p><span className='text-gray-400'>Total Tickets:</span>{item.bookedSeats.length}</p>
