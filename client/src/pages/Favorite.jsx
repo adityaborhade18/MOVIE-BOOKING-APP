@@ -22,7 +22,7 @@ const Favorite = () => {
     </div>
   ):(
      <div className='flex flex-col justify-center items-center h-screen'>
-       <h1 className='text-3xl font-bold text-center'>No Movies Available</h1>
+       <h1 className='text-3xl font-bold text-center'>No Favorite Movies Available</h1>
      </div>
   )
 }

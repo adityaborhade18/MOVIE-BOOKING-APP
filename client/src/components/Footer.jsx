@@ -14,7 +14,7 @@ const Footer =()=>{
                   </button>
                     
                     <p className="mt-6 text-sm text-gray-500">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.
+                      Your trusted source for movies and entertainment.
                     </p>
                     <div className="flex items-center gap-2 mt-3">
                         <a href="https://x.com/1828Aditya">
@@ -48,7 +48,6 @@ const Footer =()=>{
                     <div>
                         <h2 className="font-semibold text-white mb-5">COMPANY</h2>
                         <div className="text-sm text-gray-500 space-y-2 list-none">
-                            <li><a href="#">About</a></li>
                             <li><a href="#">Careers</a></li>
                             <li><a href="#">Privacy</a></li>
                             <li><a href="#">Terms</a></li>
