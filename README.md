@@ -44,8 +44,9 @@ for managing movies, shows, and bookings.
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/adityaborhade18/movie-ticket-booking-app.git
-   cd movie-ticket-booking-app
+   git clone https://github.com/adityaborhade18/MOVIE-BOOKING-APP.git
+   cd MOVIE-BOOKING-APP
+  
 
 2.Install Dependencies
   npm install
